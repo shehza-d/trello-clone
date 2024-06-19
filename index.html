@@ -3,10 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Trello Clone</title>
   </head>
   <body>
-    <h1 class="bg-red-500">Trello Clone</h1>
+    <header
+      class="flex justify-center bg-purple-400 text-gray-700 h-16 items-center m-3 rounded-md"
+    >
+      <h1 class="text-3xl font-bold">Trello Clone</h1>
+    </header>
+
+    <main
+      class="app-main bg-amber-50 min-hscreen p-4 flex gap-4 overflow-x-auto"
+      id="app-main"
+    >
+      <div class="column" id="Todo">
+        <div class="column-heading">Todo</div>
+        <div class="ticket" draggable="true">task 1</div>
+        <div class="ticket" draggable="true">task 2</div>
+        <div class="ticket" draggable="true">task 3</div>
+
+        <form class="addTicketForm">
+          <input
+            name="ticketText"
+            type="text"
+            placeholder="enter your task here"
+          />
+          <button type="submit" hidden>submit</button>
+        </form>
+      </div>
+
+      <div class="column" id="in progress">
+        <div class="column-heading">in progress</div>
+        <div class="ticket" draggable="true">task 4</div>
+
+        <form class="addTicketForm">
+          <input
+            name="ticketText"
+            type="text"
+            placeholder="enter your task here"
+          />
+          <button type="submit" hidden>submit</button>
+        </form>
+      </div>
+    </main>
+
+    <footer
+      class="bg-purple-400 fixed bottom-0 w-full py-0.5 text-center text-sm font-light text-slate-800"
+    >
+      <a
+        class="S_Underline relative z-10 px-1 pt-1 hover:after:w-full"
+        href="https://github.com/shehza-d"
+        target="_blank"
+      >
+        Ⓒ Developed and Designed by Shehzad
+      </a>
+    </footer>
   </body>
 </html>
