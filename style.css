@@ -1,3 +1,5 @@
+/* I have used CSS with tailwindCSS because it's easier to apply styling conditionally with JS */
+
 .app-main > .column {
   background-color: rgb(253 224 71);
   min-width: 18rem;
@@ -7,7 +9,7 @@
 }
 
 .app-main > .column-dropable {
-  background-color: rgb(253, 253, 182);
+  background-color: rgb(243, 243, 115);
 }
 
 .app-main > .column > h3 {

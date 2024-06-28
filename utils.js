@@ -1,3 +1,6 @@
+// fetching savedTasks obj and converting
+const savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || {};
+
 const addTask = (event) => {
   event.preventDefault();
 
@@ -43,7 +46,7 @@ export const myCreateCard = (cardTitle) => {
 
   myDiv.setAttribute("class", "column");
   myInput.setAttribute("type", "text");
-  myInput.setAttribute("placeholder", "add task");
+  myInput.setAttribute("placeholder", "Add task");
 
   myH3.appendChild(h3Text);
   myForm.appendChild(myInput);
@@ -60,7 +63,8 @@ export const createTicket = (value) => {
   const ticket = document.createElement("span");
   const elementText = document.createTextNode(value);
 
-  ticket.setAttribute("draggable", "true");
+  ticket.setAttribute("draggable", "true");ticket
+  ticket.setAttribute("class", "ticket");
   ticket.appendChild(elementText);
 
   return ticket;
