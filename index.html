@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Trello Clone</title>
   </head>
-  <body >
+  <body>
     <header
       class="flex justify-center bg-purple-400 text-gray-700 h-16 items-center m-3 rounded-md"
     >
@@ -19,11 +19,11 @@
       class="app-main bg-amber-50 m-3 min-h-[calc(100vh-139.5px)] p-4 flex gap-4 overflow-x-auto rounded-md border"
       id="app-main"
     >
-
       <form id="addCardForm">
         <input
           name="ticketText"
           type="text"
+          class="box add-card-input"
           placeholder="enter your card name"
         />
         <button type="submit" hidden>submit</button>

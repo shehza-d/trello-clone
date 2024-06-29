@@ -39,53 +39,17 @@ addCardForm.addEventListener("submit", (event) => {
 //    progress: ["task 3"],
 //  };
 
-let onTheMoveElm = null;
+// let onTheMoveElm = null;
 
-const allTickets = document.querySelectorAll(".ticket");
+// const allTickets = document.querySelectorAll(".ticket");
 
-allTickets.forEach((ticketElm) => {
-  ticketElm.addEventListener("mousedown", (event) => {
-    // console.log("🚀 ~ ticketElm.addEventListener ~ event:", event);
+// allTickets.forEach((ticketElm) => {
+//   ticketElm.addEventListener("mousedown", (event) => {
+//     // console.log("🚀 ~ ticketElm.addEventListener ~ event:", event);
 
-    const draggedTicket = event.target;
-    onTheMoveElm = draggedTicket;
-  });
-});
+//     const draggedTicket = event.target;
+//     onTheMoveElm = draggedTicket;
+//   });
+// });
 
-const columns = document.querySelectorAll(".column");
-
-columns.forEach((columnElm) => {
-  columnElm.addEventListener("dragover", (event) => {
-    // prevent default to allow drop
-    event.preventDefault();
-    if (event.target.className === "column") {
-      event.target.classList.add("column-dropable");
-    }
-  });
-
-  columnElm.addEventListener("dragleave", (event) => {
-    event.preventDefault();
-    if (event.target.className.includes("column")) {
-      event.target.classList.remove("column-dropable");
-    }
-  });
-
-  columnElm.addEventListener("drop", (e) => {
-    const droppedOver = e.target;
-
-    if (droppedOver.className.includes("column")) {
-      const form = e.target.lastElementChild;
-      e.target.insertBefore(onTheMoveElm, form);
-      event.target.classList.remove("column-dropable");
-    }
-
-    if (droppedOver.className.includes("ticket")) {
-      const ticketDroppedOver = e.target;
-      ticketDroppedOver.parentElement.insertBefore(
-        onTheMoveElm,
-        ticketDroppedOver
-      );
-      event.target.classList.remove("column-dropable");
-    }
-  });
-});
+// const columns = document.querySelectorAll(".column");

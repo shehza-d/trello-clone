@@ -1,6 +1,8 @@
 // fetching savedTasks obj and converting
 const savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || {};
 
+let onTheMoveElm = null;
+
 const addTask = (event) => {
   event.preventDefault();
 
@@ -27,6 +29,44 @@ const addTask = (event) => {
   currentForm.reset(); // clearing form
 };
 
+const handleDropOver = (event) => {
+  // prevent default to allow drop
+  event.preventDefault();
+  if (event.target.className === "column") {
+    event.target.classList.add("column-droppable");
+  }
+};
+
+const handleDragLeave = (event) => {
+  event.preventDefault();
+
+  console.log("event.target.className :>> ", event.target.className);
+  if (event.target.className.includes("column")) {
+    event.target.classList.remove("column-droppable");
+  }
+};
+
+const handleDrop = (event) => {
+  const droppedOver = event.target;
+
+  if (droppedOver.className.includes("column")) {
+    const form = event.target.lastElementChild;
+
+    event.target.insertBefore(onTheMoveElm, form);
+    event.target.classList.remove("column-droppable");
+  }
+
+  if (droppedOver.className.includes("ticket")) {
+    const ticketDroppedOver = event.target;
+
+    ticketDroppedOver.parentElement.insertBefore(
+      onTheMoveElm,
+      ticketDroppedOver,
+    );
+    event.target.classList.remove("column-droppable");
+  }
+};
+
 export const myCreateCard = (cardTitle) => {
   // This function will return a div like one below
   /* <div class="column">
@@ -47,11 +87,16 @@ export const myCreateCard = (cardTitle) => {
   myDiv.setAttribute("class", "column");
   myInput.setAttribute("type", "text");
   myInput.setAttribute("placeholder", "Add task");
+  myInput.setAttribute("class", "box");
 
   myH3.appendChild(h3Text);
   myForm.appendChild(myInput);
   myDiv.appendChild(myH3);
   myDiv.appendChild(myForm);
+
+  myDiv.addEventListener("dragover", handleDropOver);
+  myDiv.addEventListener("dragleave", handleDragLeave);
+  myDiv.addEventListener("drop", handleDrop);
 
   myForm.addEventListener("submit", addTask);
 
@@ -63,9 +108,16 @@ export const createTicket = (value) => {
   const ticket = document.createElement("span");
   const elementText = document.createTextNode(value);
 
-  ticket.setAttribute("draggable", "true");ticket
-  ticket.setAttribute("class", "ticket");
+  ticket.setAttribute("draggable", "true");
+  ticket.setAttribute("class", "ticket box");
   ticket.appendChild(elementText);
+
+  ticket.addEventListener("mousedown", (event) => {
+    // console.log("🚀 ~ ticketElm.addEventListener ~ event:", event);
+
+    const draggedTicket = event.target;
+    onTheMoveElm = draggedTicket;
+  });
 
   return ticket;
 };
