@@ -40,7 +40,7 @@ const handleDropOver = (event) => {
 const handleDragLeave = (event) => {
   event.preventDefault();
 
-  console.log("event.target.className :>> ", event.target.className);
+  // console.log("event.target.className :>> ", event.target.className);
   if (event.target.className.includes("column")) {
     event.target.classList.remove("column-droppable");
   }
@@ -52,8 +52,25 @@ const handleDrop = (event) => {
   if (droppedOver.className.includes("column")) {
     const form = event.target.lastElementChild;
 
+    // todo clean up left below
+    const movedFrom = onTheMoveElm.parentElement.firstChild.innerText;
+
     event.target.insertBefore(onTheMoveElm, form);
     event.target.classList.remove("column-droppable");
+    // after shifting the ticket we will update localStorage as-well
+    const movedTo = onTheMoveElm.parentElement.firstChild.innerText;
+    // console.log(`🚀 ~ movedFrom: ${movedFrom} to movedTo ${movedTo}`);
+
+    savedTasks[movedFrom] = savedTasks[movedFrom].filter(
+      (task) => task !== onTheMoveElm.innerText
+    );
+    // if(!Array.isArray(savedTasks[movedTo])){
+    // }
+    !Array.isArray(savedTasks[movedTo])
+      ? (savedTasks[movedTo] = [onTheMoveElm.innerText])
+      : savedTasks[movedTo].push(onTheMoveElm.innerText);
+
+    localStorage.setItem("savedTasks", JSON.stringify(savedTasks));
   }
 
   if (droppedOver.className.includes("ticket")) {
@@ -61,9 +78,10 @@ const handleDrop = (event) => {
 
     ticketDroppedOver.parentElement.insertBefore(
       onTheMoveElm,
-      ticketDroppedOver,
+      ticketDroppedOver
     );
     event.target.classList.remove("column-droppable");
+    // after shifting the ticket we will update localStorage as-well
   }
 };
 
