@@ -49,23 +49,25 @@ const handleDragLeave = (event) => {
 const handleDrop = (event) => {
   const droppedOver = event.target;
 
+  const movedFrom = onTheMoveElm.parentElement.firstChild.innerText;
+
   if (droppedOver.className.includes("column")) {
     const form = event.target.lastElementChild;
 
     // todo clean up left below
-    const movedFrom = onTheMoveElm.parentElement.firstChild.innerText;
 
     event.target.insertBefore(onTheMoveElm, form);
     event.target.classList.remove("column-droppable");
     // after shifting the ticket we will update localStorage as-well
     const movedTo = onTheMoveElm.parentElement.firstChild.innerText;
+
     // console.log(`🚀 ~ movedFrom: ${movedFrom} to movedTo ${movedTo}`);
 
+    // removing task from object
     savedTasks[movedFrom] = savedTasks[movedFrom].filter(
       (task) => task !== onTheMoveElm.innerText
     );
-    // if(!Array.isArray(savedTasks[movedTo])){
-    // }
+    // adding task to new place in object
     !Array.isArray(savedTasks[movedTo])
       ? (savedTasks[movedTo] = [onTheMoveElm.innerText])
       : savedTasks[movedTo].push(onTheMoveElm.innerText);
@@ -75,13 +77,34 @@ const handleDrop = (event) => {
 
   if (droppedOver.className.includes("ticket")) {
     const ticketDroppedOver = event.target;
+    const parentOfTicketDropped = ticketDroppedOver.parentElement;
 
-    ticketDroppedOver.parentElement.insertBefore(
-      onTheMoveElm,
-      ticketDroppedOver
-    );
+    parentOfTicketDropped.insertBefore(onTheMoveElm, ticketDroppedOver);
     event.target.classList.remove("column-droppable");
     // after shifting the ticket we will update localStorage as-well
+    let oldArr = savedTasks[movedFrom];
+    const movedTo = onTheMoveElm.parentElement.firstChild.innerText;
+
+    oldArr = oldArr.filter((task) => task !== onTheMoveElm.innerText);
+    console.log("🚀 ~ handleDrop ~ oldArr:", oldArr);
+
+    const index = Array.prototype.indexOf.call(
+      parentOfTicketDropped.children,
+      ticketDroppedOver
+    );
+    console.log("🚀 ~ handleDrop ~ index:", index);
+    // removing task from object
+    const newArr = [
+      ...oldArr.slice(0, index),
+      onTheMoveElm.innerText,
+      ...oldArr.slice(index),
+    ];
+
+    console.log("🚀 ~ handleDrop ~ newArr:", newArr);
+
+    savedTasks[movedTo] = newArr;
+
+    localStorage.setItem("savedTasks", JSON.stringify(savedTasks));
   }
 };
 

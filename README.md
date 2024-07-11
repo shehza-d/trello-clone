@@ -1,3 +1,3 @@
-# trello-clone
+# Trello Clone
 
-trello clone
+ChatGPT was not used while development
